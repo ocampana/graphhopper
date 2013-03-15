@@ -24,6 +24,7 @@ import com.graphhopper.storage.GraphStorage;
 import com.graphhopper.util.BitUtil;
 import com.graphhopper.util.DistanceCalc;
 import com.graphhopper.util.EdgeIterator;
+import com.graphhopper.util.Helper;
 import com.graphhopper.util.PointList;
 import gnu.trove.list.TLongList;
 import gnu.trove.list.array.TLongArrayList;
@@ -165,7 +166,7 @@ public abstract class OSMReaderHelper {
                     }
                 } else if ("tag".equals(sReader.getLocalName())) {
                     String tagKey = sReader.getAttributeValue(null, "k");
-                    if (tagKey != null && !tagKey.isEmpty()) {
+                    if (tagKey != null && !Helper.isEmpty(tagKey)) {
                         String tagValue = sReader.getAttributeValue(null, "v");
                         osmProperties.put(tagKey, tagValue);
                     }
