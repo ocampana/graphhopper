@@ -45,7 +45,7 @@ public class PathBidirRefTest {
     @Test
     public void testExtract() {
         Graph g = createGraph();
-        g.edge(1, 2, 10, true);
+        g.edge(1, 2, 10, true, 0);
         PathBidirRef pw = new PathBidirRef(g, carEncoder);
         EdgeIterator iter = g.getEdges(1, carOutEdges);
         iter.next();
@@ -60,8 +60,8 @@ public class PathBidirRefTest {
     @Test
     public void testExtract2() {
         Graph g = createGraph();
-        g.edge(1, 2, 10, false);
-        g.edge(2, 3, 20, false);
+        g.edge(1, 2, 10, false, 0);
+        g.edge(2, 3, 20, false, 0);
         EdgeIterator iter = g.getEdges(1, carOutEdges);
         iter.next();
         PathBidirRef pw = new PathBidirRef(g, carEncoder);

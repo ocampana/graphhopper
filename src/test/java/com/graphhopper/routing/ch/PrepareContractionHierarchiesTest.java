@@ -62,13 +62,13 @@ public class PrepareContractionHierarchiesTest {
         //   /    |
         //  4-----3
         //
-        g.edge(0, 1, 1, true);
-        g.edge(0, 2, 1, true);
-        g.edge(0, 4, 3, true);
-        g.edge(1, 2, 2, true);
-        g.edge(2, 3, 1, true);
-        g.edge(4, 3, 2, true);
-        g.edge(5, 1, 2, true);
+        g.edge(0, 1, 1, true, 0);
+        g.edge(0, 2, 1, true, 0);
+        g.edge(0, 4, 3, true, 0);
+        g.edge(1, 2, 2, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(4, 3, 2, true, 0);
+        g.edge(5, 1, 2, true, 0);
         return g;
     }
 
@@ -140,12 +140,12 @@ public class PrepareContractionHierarchiesTest {
     @Test
     public void testDirectedGraph() {
         LevelGraph g = createGraph();
-        g.edge(5, 4, 3, false);
-        g.edge(4, 5, 10, false);
-        g.edge(2, 4, 1, false);
-        g.edge(5, 2, 1, false);
-        g.edge(3, 5, 1, false);
-        g.edge(4, 3, 1, false);
+        g.edge(5, 4, 3, false, 0);
+        g.edge(4, 5, 10, false, 0);
+        g.edge(2, 4, 1, false, 0);
+        g.edge(5, 2, 1, false, 0);
+        g.edge(3, 5, 1, false, 0);
+        g.edge(4, 3, 1, false, 0);
         int old = GHUtility.count(g.getAllEdges());
         PrepareContractionHierarchies prepare = new PrepareContractionHierarchies().graph(g);
         prepare.doWork();
@@ -176,18 +176,18 @@ public class PrepareContractionHierarchiesTest {
     @Test
     public void testDirectedGraph3() {
         LevelGraph g = createGraph();
-        g.edge(0, 2, 2, true);
-        g.edge(10, 2, 2, true);
-        g.edge(11, 2, 2, true);
+        g.edge(0, 2, 2, true, 0);
+        g.edge(10, 2, 2, true, 0);
+        g.edge(11, 2, 2, true, 0);
         // create a longer one directional edge => no longish one-dir shortcut should be created        
-        g.edge(2, 1, 2, true);
-        g.edge(2, 1, 10, false);
+        g.edge(2, 1, 2, true, 0);
+        g.edge(2, 1, 10, false, 0);
 
-        g.edge(1, 3, 2, true);
-        g.edge(3, 4, 2, true);
-        g.edge(3, 5, 2, true);
-        g.edge(3, 6, 2, true);
-        g.edge(3, 7, 2, true);
+        g.edge(1, 3, 2, true, 0);
+        g.edge(3, 4, 2, true, 0);
+        g.edge(3, 5, 2, true, 0);
+        g.edge(3, 6, 2, true, 0);
+        g.edge(3, 7, 2, true, 0);
 
         PrepareContractionHierarchies prepare = new PrepareContractionHierarchies().graph(g);
         prepare.initFromGraph();
@@ -219,46 +219,46 @@ public class PrepareContractionHierarchiesTest {
         //     /         \-5->6/     /
         //  -14            \________/
 
-        g.edge(16, 0, 1, true);
-        g.edge(0, 9, 1, true);
-        g.edge(0, 17, 1, true);
-        g.edge(9, 10, 1, true);
-        g.edge(10, 11, 1, true);
-        g.edge(11, 28, 1, true);
-        g.edge(28, 29, 1, true);
-        g.edge(29, 30, 1, true);
-        g.edge(30, 31, 1, true);
-        g.edge(31, 4, 1, true);
+        g.edge(16, 0, 1, true, 0);
+        g.edge(0, 9, 1, true, 0);
+        g.edge(0, 17, 1, true, 0);
+        g.edge(9, 10, 1, true, 0);
+        g.edge(10, 11, 1, true, 0);
+        g.edge(11, 28, 1, true, 0);
+        g.edge(28, 29, 1, true, 0);
+        g.edge(29, 30, 1, true, 0);
+        g.edge(30, 31, 1, true, 0);
+        g.edge(31, 4, 1, true, 0);
 
-        g.edge(17, 1, 1, true);
-        g.edge(15, 1, 1, true);
-        g.edge(14, 1, 1, true);
-        g.edge(14, 18, 1, true);
-        g.edge(18, 19, 1, true);
-        g.edge(19, 20, 1, true);
-        g.edge(20, 15, 1, true);
-        g.edge(19, 21, 1, true);
-        g.edge(21, 16, 1, true);
-        g.edge(1, 2, 1, true);
-        g.edge(2, 3, 1, true);
-        g.edge(3, 4, 1, true);
+        g.edge(17, 1, 1, true, 0);
+        g.edge(15, 1, 1, true, 0);
+        g.edge(14, 1, 1, true, 0);
+        g.edge(14, 18, 1, true, 0);
+        g.edge(18, 19, 1, true, 0);
+        g.edge(19, 20, 1, true, 0);
+        g.edge(20, 15, 1, true, 0);
+        g.edge(19, 21, 1, true, 0);
+        g.edge(21, 16, 1, true, 0);
+        g.edge(1, 2, 1, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(3, 4, 1, true, 0);
 
-        g.edge(4, 5, 1, false);
-        g.edge(5, 6, 1, false);
-        g.edge(6, 7, 1, false);
-        g.edge(7, 13, 1, false);
-        g.edge(13, 12, 1, false);
-        g.edge(12, 4, 1, false);
+        g.edge(4, 5, 1, false, 0);
+        g.edge(5, 6, 1, false, 0);
+        g.edge(6, 7, 1, false, 0);
+        g.edge(7, 13, 1, false, 0);
+        g.edge(13, 12, 1, false, 0);
+        g.edge(12, 4, 1, false, 0);
 
-        g.edge(7, 8, 1, true);
-        g.edge(8, 22, 1, true);
-        g.edge(22, 23, 1, true);
-        g.edge(23, 24, 1, true);
-        g.edge(24, 25, 1, true);
-        g.edge(25, 27, 1, true);
-        g.edge(27, 5, 1, true);
-        g.edge(25, 26, 1, false);
-        g.edge(26, 25, 1, false);
+        g.edge(7, 8, 1, true, 0);
+        g.edge(8, 22, 1, true, 0);
+        g.edge(22, 23, 1, true, 0);
+        g.edge(23, 24, 1, true, 0);
+        g.edge(24, 25, 1, true, 0);
+        g.edge(25, 27, 1, true, 0);
+        g.edge(27, 5, 1, true, 0);
+        g.edge(25, 26, 1, false, 0);
+        g.edge(26, 25, 1, false, 0);
     }
 
     @Test
@@ -277,23 +277,23 @@ public class PrepareContractionHierarchiesTest {
     @Test
     public void testFindShortcuts_Roundabout() {
         LevelGraphStorage g = (LevelGraphStorage) createGraph();
-        EdgeSkipIterator iter1_1 = g.edge(1, 3, 1, true);
-        EdgeSkipIterator iter1_2 = g.edge(3, 4, 1, true);
-        EdgeSkipIterator iter2_1 = g.edge(4, 5, 1, false);
-        EdgeSkipIterator iter2_2 = g.edge(5, 6, 1, false);
-        EdgeSkipIterator iter3_1 = g.edge(6, 7, 1, true);
-        EdgeSkipIterator iter3_2 = g.edge(6, 8, 2, false);
-        g.edge(8, 4, 1, false);
+        EdgeSkipIterator iter1_1 = g.edge(1, 3, 1, true, 0);
+        EdgeSkipIterator iter1_2 = g.edge(3, 4, 1, true, 0);
+        EdgeSkipIterator iter2_1 = g.edge(4, 5, 1, false, 0);
+        EdgeSkipIterator iter2_2 = g.edge(5, 6, 1, false, 0);
+        EdgeSkipIterator iter3_1 = g.edge(6, 7, 1, true, 0);
+        EdgeSkipIterator iter3_2 = g.edge(6, 8, 2, false, 0);
+        g.edge(8, 4, 1, false, 0);
         g.setLevel(3, 3);
         g.setLevel(5, 5);
         g.setLevel(7, 7);
         g.setLevel(8, 8);
 
         PrepareContractionHierarchies prepare = new PrepareContractionHierarchies().graph(g);
-        g.edge(1, 4, 2, prepare.scBothDir()).skippedEdges(iter1_1.edge(), iter1_2.edge());
+        g.edge(1, 4, 2, prepare.scBothDir(), 0).skippedEdges(iter1_1.edge(), iter1_2.edge());
         int f = prepare.scOneDir();
-        g.edge(4, 6, 2, f).skippedEdges(iter2_1.edge(), iter2_2.edge());
-        g.edge(6, 4, 3, f).skippedEdges(iter3_1.edge(), iter3_2.edge());
+        g.edge(4, 6, 2, f, 0).skippedEdges(iter2_1.edge(), iter2_2.edge());
+        g.edge(6, 4, 3, f, 0).skippedEdges(iter3_1.edge(), iter3_2.edge());
 
         prepare.initFromGraph();
         // there should be two different shortcuts for both directions!
@@ -304,29 +304,29 @@ public class PrepareContractionHierarchiesTest {
     void initUnpackingGraph(LevelGraphStorage g, WeightCalculation w) {
         double dist = 1;
         int flags = carEncoder.flags(30, false);
-        g.edge(10, 0, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter1 = g.edge(0, 1, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter2 = g.edge(1, 2, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter3 = g.edge(2, 3, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter4 = g.edge(3, 4, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter5 = g.edge(4, 5, w.getWeight(dist, flags), flags);
-        EdgeSkipIterator iter6 = g.edge(5, 6, w.getWeight(dist, flags), flags);
+        g.edge(10, 0, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter1 = g.edge(0, 1, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter2 = g.edge(1, 2, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter3 = g.edge(2, 3, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter4 = g.edge(3, 4, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter5 = g.edge(4, 5, w.getWeight(dist, flags), flags, 0);
+        EdgeSkipIterator iter6 = g.edge(5, 6, w.getWeight(dist, flags), flags, 0);
         int oneDirFlags = new PrepareContractionHierarchies().scOneDir();
 
         int tmp = iter1.edge();
-        iter1 = g.edge(0, 2, 2, oneDirFlags);
+        iter1 = g.edge(0, 2, 2, oneDirFlags, 0);
         iter1.skippedEdges(tmp, iter2.edge());
         tmp = iter1.edge();
-        iter1 = g.edge(0, 3, 3, oneDirFlags);
+        iter1 = g.edge(0, 3, 3, oneDirFlags, 0);
         iter1.skippedEdges(tmp, iter3.edge());
         tmp = iter1.edge();
-        iter1 = g.edge(0, 4, 4, oneDirFlags);
+        iter1 = g.edge(0, 4, 4, oneDirFlags, 0);
         iter1.skippedEdges(tmp, iter4.edge());
         tmp = iter1.edge();
-        iter1 = g.edge(0, 5, 5, oneDirFlags);
+        iter1 = g.edge(0, 5, 5, oneDirFlags, 0);
         iter1.skippedEdges(tmp, iter5.edge());
         tmp = iter1.edge();
-        iter1 = g.edge(0, 6, 6, oneDirFlags);
+        iter1 = g.edge(0, 6, 6, oneDirFlags, 0);
         iter1.skippedEdges(tmp, iter6.edge());
         g.setLevel(0, 10);
         g.setLevel(6, 9);
@@ -368,10 +368,10 @@ public class PrepareContractionHierarchiesTest {
         //  /--1
         // -0--/
         //  |
-        g.edge(0, 1, 10, true);
-        g.edge(0, 1, 4, true);
-        g.edge(0, 2, 10, true);
-        g.edge(0, 3, 10, true);
+        g.edge(0, 1, 10, true, 0);
+        g.edge(0, 1, 4, true, 0);
+        g.edge(0, 2, 10, true, 0);
+        g.edge(0, 3, 10, true, 0);
         PrepareContractionHierarchies prepare = new PrepareContractionHierarchies().graph(g);
         prepare.doWork();
         assertEquals(0, prepare.shortcuts());
@@ -383,16 +383,16 @@ public class PrepareContractionHierarchiesTest {
     // \   /   /
     //  7-6-5-/
     void initBiGraph(Graph graph) {
-        graph.edge(0, 1, 100, true);
-        graph.edge(1, 2, 1, true);
-        graph.edge(2, 3, 1, true);
-        graph.edge(3, 4, 1, true);
-        graph.edge(4, 5, 25, true);
-        graph.edge(5, 6, 25, true);
-        graph.edge(6, 7, 5, true);
-        graph.edge(7, 0, 5, true);
-        graph.edge(3, 8, 20, true);
-        graph.edge(8, 6, 20, true);
+        graph.edge(0, 1, 100, true, 0);
+        graph.edge(1, 2, 1, true, 0);
+        graph.edge(2, 3, 1, true, 0);
+        graph.edge(3, 4, 1, true, 0);
+        graph.edge(4, 5, 25, true, 0);
+        graph.edge(5, 6, 25, true, 0);
+        graph.edge(6, 7, 5, true, 0);
+        graph.edge(7, 0, 5, true, 0);
+        graph.edge(3, 8, 20, true, 0);
+        graph.edge(8, 6, 20, true, 0);
     }
 
     // 0-1-.....-9-10
@@ -400,25 +400,25 @@ public class PrepareContractionHierarchiesTest {
     // |         |    |
     // 17-16-...-11<-/
     public static void initDirected2(Graph g) {
-        g.edge(0, 1, 1, true);
-        g.edge(1, 2, 1, true);
-        g.edge(2, 3, 1, true);
-        g.edge(3, 4, 1, true);
-        g.edge(4, 5, 1, true);
-        g.edge(5, 6, 1, true);
-        g.edge(6, 7, 1, true);
-        g.edge(7, 8, 1, true);
-        g.edge(8, 9, 1, true);
-        g.edge(9, 10, 1, true);
-        g.edge(10, 11, 1, false);
-        g.edge(11, 12, 1, true);
-        g.edge(11, 9, 3, false);
-        g.edge(12, 13, 1, true);
-        g.edge(13, 14, 1, true);
-        g.edge(14, 15, 1, true);
-        g.edge(15, 16, 1, true);
-        g.edge(16, 17, 1, true);
-        g.edge(17, 0, 1, true);
+        g.edge(0, 1, 1, true, 0);
+        g.edge(1, 2, 1, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(3, 4, 1, true, 0);
+        g.edge(4, 5, 1, true, 0);
+        g.edge(5, 6, 1, true, 0);
+        g.edge(6, 7, 1, true, 0);
+        g.edge(7, 8, 1, true, 0);
+        g.edge(8, 9, 1, true, 0);
+        g.edge(9, 10, 1, true, 0);
+        g.edge(10, 11, 1, false, 0);
+        g.edge(11, 12, 1, true, 0);
+        g.edge(11, 9, 3, false, 0);
+        g.edge(12, 13, 1, true, 0);
+        g.edge(13, 14, 1, true, 0);
+        g.edge(14, 15, 1, true, 0);
+        g.edge(15, 16, 1, true, 0);
+        g.edge(16, 17, 1, true, 0);
+        g.edge(17, 0, 1, true, 0);
     }
 
     //       8
@@ -429,43 +429,43 @@ public class PrepareContractionHierarchiesTest {
     //10<-2---4<---5
     //    9
     public static void initDirected1(Graph g) {
-        g.edge(0, 8, 1, true);
-        g.edge(0, 1, 1, false);
-        g.edge(1, 3, 1, false);
-        g.edge(3, 7, 1, false);
-        g.edge(3, 5, 1, false);
-        g.edge(5, 4, 1, false);
-        g.edge(4, 2, 1, true);
-        g.edge(2, 9, 1, false);
-        g.edge(2, 10, 1, false);
-        g.edge(2, 6, 1, true);
-        g.edge(6, 0, 1, false);
+        g.edge(0, 8, 1, true, 0);
+        g.edge(0, 1, 1, false, 0);
+        g.edge(1, 3, 1, false, 0);
+        g.edge(3, 7, 1, false, 0);
+        g.edge(3, 5, 1, false, 0);
+        g.edge(5, 4, 1, false, 0);
+        g.edge(4, 2, 1, true, 0);
+        g.edge(2, 9, 1, false, 0);
+        g.edge(2, 10, 1, false, 0);
+        g.edge(2, 6, 1, true, 0);
+        g.edge(6, 0, 1, false, 0);
     }
 
     // prepare-routing.svg
     public static LevelGraph initShortcutsGraph(LevelGraph g) {
-        g.edge(0, 1, 1, true);
-        g.edge(0, 2, 1, true);
-        g.edge(1, 2, 1, true);
-        g.edge(2, 3, 1, true);
-        g.edge(1, 4, 1, true);
-        g.edge(2, 9, 1, true);
-        g.edge(9, 3, 1, true);
-        g.edge(10, 3, 1, true);
-        g.edge(4, 5, 1, true);
-        g.edge(5, 6, 1, true);
-        g.edge(6, 7, 1, true);
-        g.edge(7, 8, 1, true);
-        g.edge(8, 9, 1, true);
-        g.edge(4, 11, 1, true);
-        g.edge(9, 14, 1, true);
-        g.edge(10, 14, 1, true);
-        g.edge(11, 12, 1, true);
-        g.edge(12, 15, 1, true);
-        g.edge(12, 13, 1, true);
-        g.edge(13, 16, 1, true);
-        g.edge(15, 16, 2, true);
-        g.edge(14, 16, 1, true);
+        g.edge(0, 1, 1, true, 0);
+        g.edge(0, 2, 1, true, 0);
+        g.edge(1, 2, 1, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(1, 4, 1, true, 0);
+        g.edge(2, 9, 1, true, 0);
+        g.edge(9, 3, 1, true, 0);
+        g.edge(10, 3, 1, true, 0);
+        g.edge(4, 5, 1, true, 0);
+        g.edge(5, 6, 1, true, 0);
+        g.edge(6, 7, 1, true, 0);
+        g.edge(7, 8, 1, true, 0);
+        g.edge(8, 9, 1, true, 0);
+        g.edge(4, 11, 1, true, 0);
+        g.edge(9, 14, 1, true, 0);
+        g.edge(10, 14, 1, true, 0);
+        g.edge(11, 12, 1, true, 0);
+        g.edge(12, 15, 1, true, 0);
+        g.edge(12, 13, 1, true, 0);
+        g.edge(13, 16, 1, true, 0);
+        g.edge(15, 16, 2, true, 0);
+        g.edge(14, 16, 1, true, 0);
         return g;
     }
 

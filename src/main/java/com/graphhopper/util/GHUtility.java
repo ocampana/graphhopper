@@ -245,7 +245,7 @@ public class GHUtility {
                     throw new IllegalStateException("empty entries should be connected to the others");
                 if (bitset.contains(newNodeIndex))
                     continue;
-                sortedGraph.edge(newIndex, newNodeIndex, eIter.distance(), eIter.flags()).
+                sortedGraph.edge(newIndex, newNodeIndex, eIter.distance(), eIter.flags(), eIter.name()).
                         wayGeometry(eIter.wayGeometry());
             }
         }
@@ -315,7 +315,7 @@ public class GHUtility {
                 int adjacentNodeIndex = eIter.node();
                 if (bitset.contains(adjacentNodeIndex))
                     continue;
-                to.edge(oldNode, adjacentNodeIndex, eIter.distance(), eIter.flags()).wayGeometry(eIter.wayGeometry());
+                to.edge(oldNode, adjacentNodeIndex, eIter.distance(), eIter.flags(), eIter.name()).wayGeometry(eIter.wayGeometry());
             }
         }
         return to;
@@ -366,6 +366,10 @@ public class GHUtility {
         }
 
         @Override public int node() {
+            throw new UnsupportedOperationException("Not supported. Edge is empty.");
+        }
+
+        @Override public int name() {
             throw new UnsupportedOperationException("Not supported. Edge is empty.");
         }
 

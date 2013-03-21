@@ -44,12 +44,12 @@ public class GraphUtilityTest {
         g.setNode(6, 2.3, 2.2);
         g.setNode(7, 5, 1.5);
         g.setNode(8, 4.6, 4);
-        g.edge(8, 2, 0.5, true);
-        g.edge(7, 3, 2.1, false);
-        g.edge(1, 0, 3.9, true);
-        g.edge(7, 5, 0.7, true);
-        g.edge(1, 2, 1.9, true);
-        g.edge(8, 1, 2.05, true);
+        g.edge(8, 2, 0.5, true, 0);
+        g.edge(7, 3, 2.1, false, 0);
+        g.edge(1, 0, 3.9, true, 0);
+        g.edge(7, 5, 0.7, true, 0);
+        g.edge(1, 2, 1.9, true, 0);
+        g.edge(8, 1, 2.05, true, 0);
         return g;
     }
 
@@ -85,15 +85,15 @@ public class GraphUtilityTest {
         g.setNode(0, 0, 1);
         g.setNode(1, 2.5, 2);
         g.setNode(2, 3.5, 3);
-        g.edge(0, 1, 1.1, false);
-        g.edge(2, 1, 1.1, false);
+        g.edge(0, 1, 1.1, false, 0);
+        g.edge(2, 1, 1.1, false, 0);
         GHUtility.sortDFS(g, createGraph());
     }
 
     @Test
     public void testCopy() {
         Graph g = initUnsorted(createGraph());
-        EdgeIterator iter = g.edge(6, 5, 11, true);
+        EdgeIterator iter = g.edge(6, 5, 11, true, 0);
         iter.wayGeometry(Helper.createPointList(12, 10, -1, 3));
         LevelGraph lg = new GraphBuilder().levelGraphCreate();
         GHUtility.copyTo(g, lg);

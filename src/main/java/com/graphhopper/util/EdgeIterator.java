@@ -68,6 +68,12 @@ public interface EdgeIterator {
     int node();
 
     /**
+     * @return the offset to retrieve the street name.
+     * @see EdgeIterator
+     */
+    int name();
+
+    /**
      * For OSM a way is often a curve not just a straight line and so nodes
      * between tower nodes are necessary to have a more exact geometry (for
      * drawing). Those nodes are called pillar nodes

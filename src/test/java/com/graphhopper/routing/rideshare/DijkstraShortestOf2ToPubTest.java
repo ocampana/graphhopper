@@ -71,10 +71,10 @@ public class DijkstraShortestOf2ToPubTest {
     public void testCalculateShortestPathWithSpecialFinishCondition() {
         int[] pubTransport = new int[]{20, 21, 31, 41, 51, 52, 62, 72};
         Graph g = GHUtility.clone(getGraph());
-        g.edge(21, 31, 100, true);
-        g.edge(31, 41, 100, true);
-        g.edge(41, 51, 100, true);
-        g.edge(51, 52, 100, true);
+        g.edge(21, 31, 100, true, 0);
+        g.edge(31, 41, 100, true, 0);
+        g.edge(41, 51, 100, true, 0);
+        g.edge(51, 52, 100, true, 0);
         DijkstraShortestOf2ToPub d = new DijkstraShortestOf2ToPub(g, carEncoder);
         d.addPubTransportPoints(pubTransport);
         int from = 1;

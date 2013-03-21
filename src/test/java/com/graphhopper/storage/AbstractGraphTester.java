@@ -73,28 +73,28 @@ public abstract class AbstractGraphTester {
         for (int i = 0; i < defaultSize * 2; i++) {
             graph.setNode(i, 2 * i, 3 * i);
         }
-        graph.edge(defaultSize + 1, defaultSize + 2, 10, true);
-        graph.edge(defaultSize + 1, defaultSize + 3, 10, true);
+        graph.edge(defaultSize + 1, defaultSize + 2, 10, true, 0);
+        graph.edge(defaultSize + 1, defaultSize + 3, 10, true, 0);
         assertEquals(2, GHUtility.count(graph.getEdges(defaultSize + 1)));
     }
 
     @Test
     public void testCreateLocation() {
         Graph graph = createGraph();
-        graph.edge(3, 1, 50, true);
+        graph.edge(3, 1, 50, true, 0);
         assertEquals(1, count(graph.getEdges(1, carOutFilter)));
 
-        graph.edge(1, 2, 100, true);
+        graph.edge(1, 2, 100, true, 0);
         assertEquals(2, count(graph.getEdges(1, carOutFilter)));
     }
 
     @Test
     public void testEdges() {
         Graph graph = createGraph();
-        graph.edge(2, 1, 12, true);
+        graph.edge(2, 1, 12, true, 0);
         assertEquals(1, count(graph.getEdges(2, carOutFilter)));
 
-        graph.edge(2, 3, 12, true);
+        graph.edge(2, 3, 12, true, 0);
         assertEquals(1, count(graph.getEdges(1, carOutFilter)));
         assertEquals(2, count(graph.getEdges(2, carOutFilter)));
         assertEquals(1, count(graph.getEdges(3, carOutFilter)));
@@ -104,11 +104,11 @@ public abstract class AbstractGraphTester {
     public void testUnidirectional() {
         Graph g = createGraph();
 
-        g.edge(1, 2, 12, false);
-        g.edge(1, 11, 12, false);
-        g.edge(11, 1, 12, false);
-        g.edge(1, 12, 12, false);
-        g.edge(3, 2, 112, false);
+        g.edge(1, 2, 12, false, 0);
+        g.edge(1, 11, 12, false, 0);
+        g.edge(11, 1, 12, false, 0);
+        g.edge(1, 12, 12, false, 0);
+        g.edge(3, 2, 112, false, 0);
         EdgeIterator i = g.getEdges(2, carOutFilter);
         assertFalse(i.next());
 
@@ -137,11 +137,11 @@ public abstract class AbstractGraphTester {
     public void testUnidirectionalEdgeFilter() {
         Graph g = createGraph();
 
-        g.edge(1, 2, 12, false);
-        g.edge(1, 11, 12, false);
-        g.edge(11, 1, 12, false);
-        g.edge(1, 12, 12, false);
-        g.edge(3, 2, 112, false);
+        g.edge(1, 2, 12, false, 0);
+        g.edge(1, 11, 12, false, 0);
+        g.edge(11, 1, 12, false, 0);
+        g.edge(1, 12, 12, false, 0);
+        g.edge(3, 2, 112, false, 0);
         EdgeIterator i = g.getEdges(2, carOutFilter);
         assertFalse(i.next());
 
@@ -170,8 +170,8 @@ public abstract class AbstractGraphTester {
     public void testUpdateUnidirectional() {
         Graph g = createGraph();
 
-        g.edge(1, 2, 12, false);
-        g.edge(3, 2, 112, false);
+        g.edge(1, 2, 12, false, 0);
+        g.edge(3, 2, 112, false, 0);
         EdgeIterator i = g.getEdges(2, carOutFilter);
         assertFalse(i.next());
         i = g.getEdges(3, carOutFilter);
@@ -179,7 +179,7 @@ public abstract class AbstractGraphTester {
         assertEquals(2, i.node());
         assertFalse(i.next());
 
-        g.edge(2, 3, 112, false);
+        g.edge(2, 3, 112, false, 0);
         i = g.getEdges(2, carOutFilter);
         assertTrue(i.next());
         assertEquals(3, i.node());
@@ -192,17 +192,17 @@ public abstract class AbstractGraphTester {
     @Test
     public void testClone() {
         Graph g = createGraph();
-        g.edge(1, 2, 10, true);
+        g.edge(1, 2, 10, true, 0);
         g.setNode(0, 12, 23);
         g.setNode(1, 8, 13);
         g.setNode(2, 2, 10);
         g.setNode(3, 5, 9);
-        g.edge(1, 3, 10, true);
+        g.edge(1, 3, 10, true, 0);
 
         Graph clone = g.copyTo(createGraph(location + "/clone", defaultSize));
         assertEquals(g.nodes(), clone.nodes());
         assertEquals(count(g.getEdges(1, carOutFilter)), count(clone.getEdges(1, carOutFilter)));
-        clone.edge(1, 4, 10, true);
+        clone.edge(1, 4, 10, true, 0);
         assertEquals(3, count(clone.getEdges(1, carOutFilter)));
         assertEquals(g.bounds(), clone.bounds());
     }
@@ -214,10 +214,10 @@ public abstract class AbstractGraphTester {
         g.setNode(1, 22, 23);
         assertEquals(2, g.nodes());
 
-        g.edge(0, 1, 10, true);
+        g.edge(0, 1, 10, true, 0);
         assertEquals(2, g.nodes());
 
-        g.edge(0, 2, 10, true);
+        g.edge(0, 2, 10, true, 0);
         assertEquals(3, g.nodes());
 
         g = createGraph();
@@ -231,11 +231,11 @@ public abstract class AbstractGraphTester {
         g.setNode(3, 78, 89);
         g.setNode(4, 2, 1);
         g.setNode(5, 7, 5);
-        g.edge(0, 1, 12, true);
-        g.edge(0, 2, 212, true);
-        g.edge(0, 3, 212, true);
-        g.edge(0, 4, 212, true);
-        g.edge(0, 5, 212, true);
+        g.edge(0, 1, 12, true, 0);
+        g.edge(0, 2, 212, true, 0);
+        g.edge(0, 3, 212, true, 0);
+        g.edge(0, 4, 212, true, 0);
+        g.edge(0, 5, 212, true, 0);
     }
 
     @Test
@@ -268,11 +268,11 @@ public abstract class AbstractGraphTester {
     @Test
     public void testDirectional() {
         Graph g = createGraph();
-        g.edge(1, 2, 12, true);
-        g.edge(2, 3, 12, false);
-        g.edge(3, 4, 12, false);
-        g.edge(3, 5, 12, true);
-        g.edge(6, 3, 12, false);
+        g.edge(1, 2, 12, true, 0);
+        g.edge(2, 3, 12, false, 0);
+        g.edge(3, 4, 12, false, 0);
+        g.edge(3, 5, 12, true, 0);
+        g.edge(6, 3, 12, false, 0);
 
         assertEquals(1, count(g.getEdges(1)));
         assertEquals(1, count(g.getEdges(1, carInFilter)));
@@ -298,28 +298,28 @@ public abstract class AbstractGraphTester {
     @Test
     public void testDozendEdges() {
         Graph g = createGraph();
-        g.edge(1, 2, 12, true);
+        g.edge(1, 2, 12, true, 0);
         assertEquals(1, count(g.getEdges(1)));
 
-        g.edge(1, 3, 13, false);
+        g.edge(1, 3, 13, false, 0);
         assertEquals(2, count(g.getEdges(1)));
 
-        g.edge(1, 4, 14, false);
+        g.edge(1, 4, 14, false, 0);
         assertEquals(3, count(g.getEdges(1)));
 
-        g.edge(1, 5, 15, false);
+        g.edge(1, 5, 15, false, 0);
         assertEquals(4, count(g.getEdges(1)));
 
-        g.edge(1, 6, 16, false);
+        g.edge(1, 6, 16, false, 0);
         assertEquals(5, count(g.getEdges(1)));
 
-        g.edge(1, 7, 16, false);
+        g.edge(1, 7, 16, false, 0);
         assertEquals(6, count(g.getEdges(1)));
 
-        g.edge(1, 8, 16, false);
+        g.edge(1, 8, 16, false, 0);
         assertEquals(7, count(g.getEdges(1)));
 
-        g.edge(1, 9, 16, false);
+        g.edge(1, 9, 16, false, 0);
         assertEquals(8, count(g.getEdges(1)));
         assertEquals(8, count(g.getEdges(1, carOutFilter)));
         assertEquals(1, count(g.getEdges(1, carInFilter)));
@@ -330,7 +330,7 @@ public abstract class AbstractGraphTester {
     public void testCheckFirstNode() {
         Graph g = createGraph();
         assertEquals(0, count(g.getEdges(1)));
-        g.edge(0, 1, 12, true);
+        g.edge(0, 1, 12, true, 0);
         assertEquals(1, count(g.getEdges(1)));
     }
 
@@ -342,8 +342,8 @@ public abstract class AbstractGraphTester {
         g.setNode(20, 20, 1);
         g.setNode(21, 21, 1);
 
-        g.edge(10, 20, 10, false);
-        g.edge(21, 6, 10, false);
+        g.edge(10, 20, 10, false, 0);
+        g.edge(21, 6, 10, false, 0);
 
         g.markNodeRemoved(0);
         g.markNodeRemoved(7);
@@ -392,18 +392,18 @@ public abstract class AbstractGraphTester {
             } else {
                 // connect to
                 // ... a deleted node
-                g.edge(i, 0, 10 * i, true);
+                g.edge(i, 0, 10 * i, true, 0);
                 // ... a non-deleted and non-moved node
-                g.edge(i, 2, 10 * i, true);
+                g.edge(i, 2, 10 * i, true, 0);
                 // ... a moved node
-                g.edge(i, fillToSize - 1, 10 * i, true);
+                g.edge(i, fillToSize - 1, 10 * i, true, 0);
             }
         }
 
-        g.edge(0, 1, 10, true);
-        g.edge(0, 3, 20, false);
-        g.edge(3, 5, 20, true);
-        g.edge(1, 5, 20, false);
+        g.edge(0, 1, 10, true, 0);
+        g.edge(0, 3, 20, false, 0);
+        g.edge(3, 5, 20, true, 0);
+        g.edge(1, 5, 20, false, 0);
 
         g.markNodeRemoved(0);
         g.markNodeRemoved(2);
@@ -464,9 +464,9 @@ public abstract class AbstractGraphTester {
         g.setNode(2, 3, 3);
         g.setNode(3, 78, 89);
 
-        g.edge(3, 0, 21, true);
-        g.edge(5, 0, 22, true);
-        g.edge(5, 3, 23, true);
+        g.edge(3, 0, 21, true, 0);
+        g.edge(5, 0, 22, true, 0);
+        g.edge(5, 3, 23, true, 0);
 
         g.markNodeRemoved(0);
         g.markNodeRemoved(3);
@@ -493,12 +493,12 @@ public abstract class AbstractGraphTester {
         g.setNode(12, 12, 1);
 
         // mini subnetwork which gets completely removed:
-        g.edge(5, 10, 510, true);
+        g.edge(5, 10, 510, true, 0);
         g.markNodeRemoved(5);
         g.markNodeRemoved(10);
 
-        g.edge(9, 11, 911, true);
-        g.edge(9, 12, 912, true);
+        g.edge(9, 11, 911, true, 0);
+        g.edge(9, 12, 912, true, 0);
 
         assertEquals(13, g.nodes());
         assertEquals(Arrays.<String>asList(), GHUtility.getProblems(g));
@@ -522,15 +522,15 @@ public abstract class AbstractGraphTester {
         g.setNode(11, 11, 1);
 
         // mini subnetwork which gets completely removed:
-        g.edge(5, 10, 510, true);
+        g.edge(5, 10, 510, true, 0);
         g.markNodeRemoved(3);
         g.markNodeRemoved(4);
         g.markNodeRemoved(5);
         g.markNodeRemoved(10);
 
-        g.edge(9, 11, 911, true);
-        g.edge(7, 9, 78, true);
-        g.edge(8, 9, 89, true);
+        g.edge(9, 11, 911, true, 0);
+        g.edge(7, 9, 78, true, 0);
+        g.edge(8, 9, 89, true, 0);
 
         // perform deletion
         g.optimize();
@@ -573,8 +573,8 @@ public abstract class AbstractGraphTester {
     @Test
     public void testFlags() {
         Graph graph = createGraph();
-        graph.edge(0, 1, 10, carEncoder.flags(120, true));
-        graph.edge(2, 3, 10, carEncoder.flags(10, false));
+        graph.edge(0, 1, 10, carEncoder.flags(120, true), 0);
+        graph.edge(2, 3, 10, carEncoder.flags(10, false), 0);
 
         EdgeIterator iter = graph.getEdges(0);
         assertTrue(iter.next());
@@ -608,14 +608,14 @@ public abstract class AbstractGraphTester {
         Directory dir = new RAMDirectory();
         Graph gs = new GraphStorage(dir).createNew(defaultSize);
         int testIndex = dir.findCreate("edges").segmentSize() * 3;
-        gs.edge(0, testIndex, 10, true);
+        gs.edge(0, testIndex, 10, true, 0);
     }
 
     @Test
     public void testEdgeProperties() {
         Graph someGraphImpl = createGraph();
-        EdgeIterator iter1 = someGraphImpl.edge(0, 1, 10, true);
-        EdgeIterator iter2 = someGraphImpl.edge(0, 2, 20, true);
+        EdgeIterator iter1 = someGraphImpl.edge(0, 1, 10, true, 0);
+        EdgeIterator iter2 = someGraphImpl.edge(0, 2, 20, true, 0);
 
         int edgeId = iter1.edge();
         EdgeIterator iter = someGraphImpl.getEdgeProps(edgeId, 0);
@@ -645,9 +645,9 @@ public abstract class AbstractGraphTester {
     @Test
     public void testCreateDuplicateEdges() {
         Graph graph = createGraph();
-        graph.edge(2, 1, 12, true);
-        graph.edge(2, 3, 12, true);
-        graph.edge(2, 3, 13, false);
+        graph.edge(2, 1, 12, true, 0);
+        graph.edge(2, 3, 12, true, 0);
+        graph.edge(2, 3, 13, false, 0);
         assertEquals(3, GHUtility.count(graph.getEdges(2, carOutFilter)));
 
         // no exception        
@@ -681,32 +681,32 @@ public abstract class AbstractGraphTester {
         assertTrue(carEncoder.isBackward(oneIter.flags()));
         assertFalse(carEncoder.isBoth(oneIter.flags()));
 
-        graph.edge(3, 2, 14, true);
+        graph.edge(3, 2, 14, true, 0);
         assertEquals(4, GHUtility.count(graph.getEdges(2, carOutFilter)));
     }
 
     @Test
     public void testIdenticalNodes() {
         Graph g = createGraph();
-        g.edge(0, 0, 100, true);
+        g.edge(0, 0, 100, true, 0);
         assertEquals(1, GHUtility.count(g.getEdges(0)));
     }
 
     @Test
     public void testIdenticalNodes2() {
         Graph g = createGraph();
-        g.edge(0, 0, 100, false);
-        g.edge(0, 0, 100, false);
+        g.edge(0, 0, 100, false, 0);
+        g.edge(0, 0, 100, false, 0);
         assertEquals(2, GHUtility.count(g.getEdges(0)));
     }
 
     @Test
     public void testEdgeReturn() {
         Graph g = createGraph();
-        EdgeIterator iter = g.edge(4, 10, 100, carEncoder.flags(10, false));
+        EdgeIterator iter = g.edge(4, 10, 100, carEncoder.flags(10, false), 0);
         assertEquals(4, iter.baseNode());
         assertEquals(10, iter.node());
-        iter = g.edge(14, 10, 100, carEncoder.flags(10, false));
+        iter = g.edge(14, 10, 100, carEncoder.flags(10, false), 0);
         assertEquals(14, iter.baseNode());
         assertEquals(10, iter.node());
     }
@@ -715,11 +715,11 @@ public abstract class AbstractGraphTester {
     public void testPillarNodes() {
         Graph g = createGraph();
         PointList pointList = Helper.createPointList(1, 1, 1, 2, 1, 3);
-        g.edge(0, 4, 100, carEncoder.flags(10, false)).wayGeometry(pointList);
+        g.edge(0, 4, 100, carEncoder.flags(10, false), 0).wayGeometry(pointList);
         pointList = Helper.createPointList(1, 5, 1, 6, 1, 7, 1, 8, 1, 9);
-        g.edge(4, 10, 100, carEncoder.flags(10, false)).wayGeometry(pointList);
+        g.edge(4, 10, 100, carEncoder.flags(10, false), 0).wayGeometry(pointList);
         pointList = Helper.createPointList(1, 13, 1, 12, 1, 11);
-        g.edge(14, 0, 100, carEncoder.flags(10, false)).wayGeometry(pointList);
+        g.edge(14, 0, 100, carEncoder.flags(10, false), 0).wayGeometry(pointList);
 
         // if tower node requested => return only tower nodes
         EdgeIterator iter = g.getEdges(0);
@@ -748,9 +748,9 @@ public abstract class AbstractGraphTester {
     public void footMix() {
         Graph g = createGraph();
         VehicleEncoder footEncoder = new FootFlagEncoder();
-        g.edge(0, 1, 10, footEncoder.flags(10, true));
-        g.edge(0, 2, 10, carEncoder.flags(10, true));
-        g.edge(0, 3, 10, footEncoder.flags(10, true) | carEncoder.flags(10, true));
+        g.edge(0, 1, 10, footEncoder.flags(10, true), 0);
+        g.edge(0, 2, 10, carEncoder.flags(10, true), 0);
+        g.edge(0, 3, 10, footEncoder.flags(10, true) | carEncoder.flags(10, true), 0);
         assertEquals(Arrays.asList(1, 3),
                 GHUtility.neighbors(g.getEdges(0, new DefaultEdgeFilter(footEncoder, false, true))));
         assertEquals(Arrays.asList(2, 3),

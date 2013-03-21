@@ -65,11 +65,12 @@ public interface Graph {
      * @param distance between a and b. Often setNode is not called - if it is
      * not a geo-graph - and we need the distance parameter here.
      * @param flags see EdgeFlags - involves velocity and direction
+     * @param name the index where the name of the edge starts.
      * @return the created edge
      */
-    EdgeIterator edge(int a, int b, double distance, int flags);
+    EdgeIterator edge(int a, int b, double distance, int flags, int name);
 
-    EdgeIterator edge(int a, int b, double distance, boolean bothDirections);
+    EdgeIterator edge(int a, int b, double distance, boolean bothDirections, int name);
 
     /**
      * The returned EdgeIterator will return endNode as node().

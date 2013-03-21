@@ -42,8 +42,8 @@ public class EdgeSkipIteratorTest {
     @Test
     public void testUpdateFlags() {
         LevelGraph g = createGraph();
-        g.edge(0, 1, 12, carFlagsEncoder.flags(10, true));
-        g.edge(0, 2, 13, carFlagsEncoder.flags(20, true));
+        g.edge(0, 1, 12, carFlagsEncoder.flags(10, true), 0);
+        g.edge(0, 2, 13, carFlagsEncoder.flags(20, true), 0);
 
         assertEquals(2, GHUtility.count(g.getAllEdges()));
         assertEquals(1, GHUtility.count(g.getEdges(1, carOutFilter)));

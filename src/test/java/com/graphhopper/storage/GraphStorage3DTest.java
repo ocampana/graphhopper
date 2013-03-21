@@ -59,6 +59,6 @@ public class GraphStorage3DTest {
         double tmpDist = dist.calcDist(g.getLatitude(from), g.getLongitude(from), g.getHeight(from),
                 g.getLatitude(to), g.getLongitude(to), g.getHeight(to));
         // System.out.println(from + "->" + to + " " + tmpDist);
-        g.edge(from, to, tmpDist, true);
+        g.edge(from, to, tmpDist, true, 0);
     }
 }

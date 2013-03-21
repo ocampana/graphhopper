@@ -57,12 +57,12 @@ public abstract class AbstractLocation2IDIndexTester {
         g.setNode(4, 6, 1);
         g.setNode(5, 4, 4);
         g.setNode(6, 4.5, -0.5);
-        g.edge(0, 1, 3.5, true);
-        g.edge(0, 2, 2.5, true);
-        g.edge(2, 3, 1, true);
-        g.edge(3, 4, 2.2, true);
-        g.edge(1, 4, 2.4, true);
-        g.edge(3, 5, 1.5, true);
+        g.edge(0, 1, 3.5, true, 0);
+        g.edge(0, 2, 2.5, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(3, 4, 2.2, true, 0);
+        g.edge(1, 4, 2.4, true, 0);
+        g.edge(3, 5, 1.5, true, 0);
         
         Location2IDIndex idx = createIndex(g, 8);
         assertEquals(4, idx.findID(5, 2));
@@ -93,12 +93,12 @@ public abstract class AbstractLocation2IDIndexTester {
         g.setNode(4, 6, 1);
         g.setNode(5, 4, 4);
         g.setNode(6, 4.5, -0.5);
-        g.edge(0, 1, 3.5, true);
-        g.edge(0, 2, 2.5, true);
-        g.edge(2, 3, 1, true);
-        g.edge(3, 4, 3.2, true);
-        g.edge(1, 4, 2.4, true);
-        g.edge(3, 5, 1.5, true);
+        g.edge(0, 1, 3.5, true, 0);
+        g.edge(0, 2, 2.5, true, 0);
+        g.edge(2, 3, 1, true, 0);
+        g.edge(3, 4, 3.2, true, 0);
+        g.edge(1, 4, 2.4, true, 0);
+        g.edge(3, 5, 1.5, true, 0);
         
         Location2IDIndex idx = createIndex(g, 28);
         assertEquals(4, idx.findID(5, 2));
@@ -211,26 +211,26 @@ public abstract class AbstractLocation2IDIndexTester {
         graph.setNode(16, 5, 5);
         // => 17 locations
 
-        graph.edge(a0, b1, 1, true);
-        graph.edge(c2, b1, 1, true);
-        graph.edge(c2, d3, 1, true);
-        graph.edge(f5, b1, 1, true);
-        graph.edge(e4, f5, 1, true);
-        graph.edge(m12, d3, 1, true);
-        graph.edge(e4, k10, 1, true);
-        graph.edge(f5, d3, 1, true);
-        graph.edge(f5, i8, 1, true);
-        graph.edge(f5, j9, 1, true);
-        graph.edge(k10, g6, 1, true);
-        graph.edge(j9, l11, 1, true);
-        graph.edge(i8, l11, 1, true);
-        graph.edge(i8, h7, 1, true);
-        graph.edge(k10, n13, 1, true);
-        graph.edge(k10, o14, 1, true);
-        graph.edge(l11, p15, 1, true);
-        graph.edge(m12, p15, 1, true);
-        graph.edge(q16, p15, 1, true);
-        graph.edge(q16, m12, 1, true);
+        graph.edge(a0, b1, 1, true, 0);
+        graph.edge(c2, b1, 1, true, 0);
+        graph.edge(c2, d3, 1, true, 0);
+        graph.edge(f5, b1, 1, true, 0);
+        graph.edge(e4, f5, 1, true, 0);
+        graph.edge(m12, d3, 1, true, 0);
+        graph.edge(e4, k10, 1, true, 0);
+        graph.edge(f5, d3, 1, true, 0);
+        graph.edge(f5, i8, 1, true, 0);
+        graph.edge(f5, j9, 1, true, 0);
+        graph.edge(k10, g6, 1, true, 0);
+        graph.edge(j9, l11, 1, true, 0);
+        graph.edge(i8, l11, 1, true, 0);
+        graph.edge(i8, h7, 1, true, 0);
+        graph.edge(k10, n13, 1, true, 0);
+        graph.edge(k10, o14, 1, true, 0);
+        graph.edge(l11, p15, 1, true, 0);
+        graph.edge(m12, p15, 1, true, 0);
+        graph.edge(q16, p15, 1, true, 0);
+        graph.edge(q16, m12, 1, true, 0);
         return graph;
     }
 }

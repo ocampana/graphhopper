@@ -67,9 +67,9 @@ public class FootFlagEncoderTest {
     @Test
     public void testGraph() {
         Graph g = new GraphBuilder().create();
-        g.edge(0, 1, 10, footEncoder.flags(10, true));
-        g.edge(0, 2, 10, footEncoder.flags(5, true));
-        g.edge(1, 3, 10, footEncoder.flags(10, true));
+        g.edge(0, 1, 10, footEncoder.flags(10, true), 0);
+        g.edge(0, 2, 10, footEncoder.flags(5, true), 0);
+        g.edge(1, 3, 10, footEncoder.flags(10, true), 0);
         EdgeFilter out = new DefaultEdgeFilter(footEncoder, false, true);
         assertEquals(Arrays.asList(1, 2), GHUtility.neighbors(g.getEdges(0, out)));
         assertEquals(Arrays.asList(0, 3), GHUtility.neighbors(g.getEdges(1, out)));

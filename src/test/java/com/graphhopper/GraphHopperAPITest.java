@@ -40,11 +40,11 @@ public class GraphHopperAPITest {
         graph.setNode(3, 42, 10.4);
         graph.setNode(4, 41.9, 10.2);
 
-        graph.edge(0, 1, 10, true);
-        graph.edge(1, 2, 10, false);
-        graph.edge(2, 3, 10, true);
-        graph.edge(0, 4, 40, true);
-        graph.edge(4, 3, 40, true);
+        graph.edge(0, 1, 10, true, 0);
+        graph.edge(1, 2, 10, false, 0);
+        graph.edge(2, 3, 10, true, 0);
+        graph.edge(0, 4, 40, true, 0);
+        graph.edge(4, 3, 40, true, 0);
 
         GraphHopperAPI instance = new GraphHopper(graph);
         GHResponse ph = instance.route(new GHRequest(42, 10.4, 42, 10));

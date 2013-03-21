@@ -39,26 +39,26 @@ public class PrepareRoutingSubnetworksTest {
     Graph createSubnetworkTestGraph() {
         Graph g = createGraph();
         // big network
-        g.edge(1, 2, 1, true);
-        g.edge(1, 4, 1, false);
-        g.edge(1, 8, 1, true);
-        g.edge(2, 4, 1, true);
-        g.edge(8, 4, 1, false);
-        g.edge(8, 11, 1, true);
-        g.edge(12, 11, 1, true);
-        g.edge(9, 12, 1, false);
+        g.edge(1, 2, 1, true, 0);
+        g.edge(1, 4, 1, false, 0);
+        g.edge(1, 8, 1, true, 0);
+        g.edge(2, 4, 1, true, 0);
+        g.edge(8, 4, 1, false, 0);
+        g.edge(8, 11, 1, true, 0);
+        g.edge(12, 11, 1, true, 0);
+        g.edge(9, 12, 1, false, 0);
 
         // large network
-        g.edge(0, 13, 1, true);
-        g.edge(0, 3, 1, true);
-        g.edge(0, 7, 1, true);
-        g.edge(3, 7, 1, true);
-        g.edge(3, 5, 1, true);
-        g.edge(13, 5, 1, true);
+        g.edge(0, 13, 1, true, 0);
+        g.edge(0, 3, 1, true, 0);
+        g.edge(0, 7, 1, true, 0);
+        g.edge(3, 7, 1, true, 0);
+        g.edge(3, 5, 1, true, 0);
+        g.edge(13, 5, 1, true, 0);
 
         // small network
-        g.edge(6, 14, 1, true);
-        g.edge(10, 14, 1, true);
+        g.edge(6, 14, 1, true, 0);
+        g.edge(10, 14, 1, true, 0);
         return g;
     }
 

@@ -423,11 +423,11 @@ public class PrepareContractionHierarchies extends AbstractAlgoPreparation<Prepa
             // minor improvement: if (shortcuts.containsKey((long) n.endNode * refs.length + u)) 
             // then two shortcuts with the same nodes (u<->n.endNode) exists => check current shortcut against both
 
-            Shortcut sc = new Shortcut(fromNode, n.endNode, n.distance);
+            Shortcut sc = new Shortcut(fromNode, n.endNode, n.distance, n.name);
             if (shortcuts.containsKey(sc))
                 continue;
             else {
-                Shortcut tmpSc = new Shortcut(n.endNode, fromNode, n.distance);
+                Shortcut tmpSc = new Shortcut(n.endNode, fromNode, n.distance, n.name);
                 Shortcut tmpRetSc = shortcuts.get(tmpSc);
                 if (tmpRetSc != null) {
                     tmpRetSc.flags = scBothDir;
@@ -466,7 +466,7 @@ public class PrepareContractionHierarchies extends AbstractAlgoPreparation<Prepa
             }
 
             if (!updatedInGraph) {
-                iter = g.edge(sc.from, sc.to, sc.distance, sc.flags);
+                iter = g.edge(sc.from, sc.to, sc.distance, sc.flags, sc.name);
                 iter.skippedEdges(sc.skippedEdge1, sc.skippedEdge2);
                 setOrigEdgeCount(iter.edge(), sc.originalEdges);
                 tmpNewShortcuts++;
@@ -659,11 +659,13 @@ public class PrepareContractionHierarchies extends AbstractAlgoPreparation<Prepa
         double distance;
         int originalEdges;
         int flags = scOneDir;
+        int name;
 
-        public Shortcut(int from, int to, double dist) {
+        public Shortcut(int from, int to, double dist, int name) {
             this.from = from;
             this.to = to;
             this.distance = dist;
+            this.name = name;
         }
 
         @Override
@@ -680,7 +682,7 @@ public class PrepareContractionHierarchies extends AbstractAlgoPreparation<Prepa
             if (obj == null || getClass() != obj.getClass())
                 return false;
             final Shortcut other = (Shortcut) obj;
-            if (this.from != other.from || this.to != other.to)
+            if (this.from != other.from || this.to != other.to || this.name != other.name)
                 return false;
 
             return Double.doubleToLongBits(this.distance) == Double.doubleToLongBits(other.distance);
@@ -698,6 +700,7 @@ public class PrepareContractionHierarchies extends AbstractAlgoPreparation<Prepa
         int edge;
         EdgeEntry entry;
         double distance;
+        int name;
 
         @Override public String toString() {
             return "" + endNode;

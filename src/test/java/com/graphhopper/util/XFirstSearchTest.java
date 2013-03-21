@@ -52,18 +52,18 @@ public class XFirstSearchTest {
         };
 
         Graph g = new GraphBuilder().create();
-        g.edge(0, 1, 85, true);
-        g.edge(0, 2, 217, true);
-        g.edge(0, 3, 173, true);
-        g.edge(0, 5, 173, true);
-        g.edge(1, 6, 75, true);
-        g.edge(2, 7, 51, true);
-        g.edge(3, 8, 23, true);
-        g.edge(4, 8, 793, true);
-        g.edge(8, 10, 343, true);
-        g.edge(6, 9, 72, true);
-        g.edge(9, 10, 8, true);
-        g.edge(5, 10, 1, true);
+        g.edge(0, 1, 85, true, 0);
+        g.edge(0, 2, 217, true, 0);
+        g.edge(0, 3, 173, true, 0);
+        g.edge(0, 5, 173, true, 0);
+        g.edge(1, 6, 75, true, 0);
+        g.edge(2, 7, 51, true, 0);
+        g.edge(3, 8, 23, true, 0);
+        g.edge(4, 8, 793, true, 0);
+        g.edge(8, 10, 343, true, 0);
+        g.edge(6, 9, 72, true, 0);
+        g.edge(9, 10, 8, true, 0);
+        g.edge(5, 10, 1, true, 0);
 
         bfs.start(g, 0, false);
 

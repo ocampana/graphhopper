@@ -91,15 +91,15 @@ public class LevelGraphStorageTest extends GraphStorageTest {
     @Test
     public void testEdgeFilter() {
         LevelGraph g = createGraph();
-        g.edge(0, 1, 10, true);
-        g.edge(0, 2, 20, true);
-        g.edge(2, 3, 30, true);
-        EdgeSkipIterator tmpIter = g.edge(3, 4, 40, true);
+        g.edge(0, 1, 10, true, 0);
+        g.edge(0, 2, 20, true, 0);
+        g.edge(2, 3, 30, true, 0);
+        EdgeSkipIterator tmpIter = g.edge(3, 4, 40, true, 0);
         assertEquals(EdgeIterator.NO_EDGE, tmpIter.skippedEdge1());
         assertEquals(EdgeIterator.NO_EDGE, tmpIter.skippedEdge2());
 
         // shortcut
-        g.edge(0, 4, 40, true);
+        g.edge(0, 4, 40, true, 0);
         g.setLevel(0, 1);
         g.setLevel(4, 1);
 
@@ -112,9 +112,9 @@ public class LevelGraphStorageTest extends GraphStorageTest {
     @Test
     public void testDisconnectEdge() {
         LevelGraphStorage g = (LevelGraphStorage) createGraph();
-        g.edge(1, 2, 10, true);
-        g.edge(1, 0, 20, false);
-        g.edge(3, 1, 30, false);
+        g.edge(1, 2, 10, true, 0);
+        g.edge(1, 0, 20, false, 0);
+        g.edge(3, 1, 30, false, 0);
         EdgeIterator iter = g.getEdges(1);
         iter.next();
         assertEquals(2, iter.node());

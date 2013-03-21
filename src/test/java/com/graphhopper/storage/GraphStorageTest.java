@@ -68,9 +68,9 @@ public class GraphStorageTest extends AbstractGraphTester {
         graph.setNode(1, 11, 20);
         graph.setNode(2, 12, 12);
 
-        graph.edge(0, 1, 100, true).wayGeometry(Helper.createPointList(1, 1, 2, 3));
-        graph.edge(0, 2, 200, true);
-        graph.edge(1, 2, 120, false);
+        graph.edge(0, 1, 100, true, 0).wayGeometry(Helper.createPointList(1, 1, 2, 3));
+        graph.edge(0, 2, 200, true, 0);
+        graph.edge(1, 2, 120, false, 0);
 
         checkGraph(graph);
         graph.flush();
@@ -81,7 +81,7 @@ public class GraphStorageTest extends AbstractGraphTester {
         assertEquals(3, graph.nodes());
         checkGraph(graph);
 
-        graph.edge(3, 4, 123, true);
+        graph.edge(3, 4, 123, true, 0);
         checkGraph(graph);
     }
 
@@ -110,9 +110,9 @@ public class GraphStorageTest extends AbstractGraphTester {
     @Test
     public void testGetAllEdges() {
         Graph g = createGraph();
-        g.edge(0, 1, 2, true);
-        g.edge(3, 1, 1, false);
-        g.edge(3, 2, 1, false);
+        g.edge(0, 1, 2, true, 0);
+        g.edge(3, 1, 1, false, 0);
+        g.edge(3, 2, 1, false, 0);
 
         RawEdgeIterator iter = g.getAllEdges();
         assertTrue(iter.next());
@@ -137,9 +137,9 @@ public class GraphStorageTest extends AbstractGraphTester {
     @Test
     public void internalDisconnect() {
         GraphStorage g = (GraphStorage) createGraph();
-        EdgeIterator iter0 = g.edge(0, 1, 10, true);
-        EdgeIterator iter1 = g.edge(1, 2, 10, true);
-        g.edge(0, 3, 10, true);
+        EdgeIterator iter0 = g.edge(0, 1, 10, true, 0);
+        EdgeIterator iter1 = g.edge(1, 2, 10, true, 0);
+        g.edge(0, 3, 10, true, 0);
 
         assertEquals(Arrays.asList(1, 3), GHUtility.neighbors(g.getEdges(0)));
         assertEquals(Arrays.asList(0, 2), GHUtility.neighbors(g.getEdges(1)));

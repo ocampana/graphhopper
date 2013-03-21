@@ -78,26 +78,26 @@ public class DijkstraBidirectionCHTest extends AbstractRoutingAlgorithmTester {
     @Test
     public void testPathRecursiveUnpacking() {
         LevelGraphStorage g2 = (LevelGraphStorage) createGraph();
-        g2.edge(0, 1, 1, true);
-        EdgeSkipIterator iter1_1 = g2.edge(0, 2, 1.4, true);
-        EdgeSkipIterator iter1_2 = g2.edge(2, 5, 1.4, true);
-        g2.edge(1, 2, 1, true);
-        g2.edge(1, 3, 3, true);
-        g2.edge(2, 3, 1, true);
-        g2.edge(4, 3, 1, true);
-        g2.edge(2, 5, 1.4, true);
-        g2.edge(3, 5, 1, true);
-        g2.edge(5, 6, 1, true);
-        g2.edge(4, 6, 1, true);
-        g2.edge(5, 7, 1.4, true);
-        g2.edge(6, 7, 1, true);
+        g2.edge(0, 1, 1, true, 0);
+        EdgeSkipIterator iter1_1 = g2.edge(0, 2, 1.4, true, 0);
+        EdgeSkipIterator iter1_2 = g2.edge(2, 5, 1.4, true, 0);
+        g2.edge(1, 2, 1, true, 0);
+        g2.edge(1, 3, 3, true, 0);
+        g2.edge(2, 3, 1, true, 0);
+        g2.edge(4, 3, 1, true, 0);
+        g2.edge(2, 5, 1.4, true, 0);
+        g2.edge(3, 5, 1, true, 0);
+        g2.edge(5, 6, 1, true, 0);
+        g2.edge(4, 6, 1, true, 0);
+        g2.edge(5, 7, 1.4, true, 0);
+        g2.edge(6, 7, 1, true, 0);
 
         VehicleEncoder carEncoder = new CarFlagEncoder();
         // simulate preparation
-        EdgeSkipIterator iter2_1 = g2.edge(0, 5, 2.8, carEncoder.flags(0, true));
+        EdgeSkipIterator iter2_1 = g2.edge(0, 5, 2.8, carEncoder.flags(0, true), 0);
         iter2_1.skippedEdges(iter1_1.edge(), iter1_2.edge());
-        EdgeSkipIterator iter2_2 = g2.edge(5, 7, 1.4, carEncoder.flags(0, true));
-        g2.edge(0, 7, 4.2, carEncoder.flags(0, true)).skippedEdges(iter2_1.edge(), iter2_2.edge());
+        EdgeSkipIterator iter2_2 = g2.edge(5, 7, 1.4, carEncoder.flags(0, true), 0);
+        g2.edge(0, 7, 4.2, carEncoder.flags(0, true), 0).skippedEdges(iter2_1.edge(), iter2_2.edge());
         g2.setLevel(1, 0);
         g2.setLevel(3, 1);
         g2.setLevel(4, 2);

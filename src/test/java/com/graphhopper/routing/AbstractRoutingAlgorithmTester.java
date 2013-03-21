@@ -91,26 +91,26 @@ public abstract class AbstractRoutingAlgorithmTester {
     // |/ \--7
     // 6----/
     void initFastVsShort(Graph graph) {
-        graph.edge(0, 1, 7000, carEncoder.flags(10, false));
-        graph.edge(0, 4, 5000, carEncoder.flags(20, false));
+        graph.edge(0, 1, 7000, carEncoder.flags(10, false), 0);
+        graph.edge(0, 4, 5000, carEncoder.flags(20, false), 0);
 
-        graph.edge(1, 4, 7000, carEncoder.flags(10, true));
-        graph.edge(1, 5, 7000, carEncoder.flags(10, true));
-        graph.edge(1, 2, 20000, carEncoder.flags(10, true));
+        graph.edge(1, 4, 7000, carEncoder.flags(10, true), 0);
+        graph.edge(1, 5, 7000, carEncoder.flags(10, true), 0);
+        graph.edge(1, 2, 20000, carEncoder.flags(10, true), 0);
 
-        graph.edge(5, 2, 5000, carEncoder.flags(10, false));
-        graph.edge(2, 3, 5000, carEncoder.flags(10, false));
+        graph.edge(5, 2, 5000, carEncoder.flags(10, false), 0);
+        graph.edge(2, 3, 5000, carEncoder.flags(10, false), 0);
 
-        graph.edge(5, 3, 11000, carEncoder.flags(20, false));
-        graph.edge(3, 7, 7000, carEncoder.flags(10, false));
+        graph.edge(5, 3, 11000, carEncoder.flags(20, false), 0);
+        graph.edge(3, 7, 7000, carEncoder.flags(10, false), 0);
 
-        graph.edge(4, 6, 5000, carEncoder.flags(20, false));
-        graph.edge(5, 4, 7000, carEncoder.flags(10, false));
+        graph.edge(4, 6, 5000, carEncoder.flags(20, false), 0);
+        graph.edge(5, 4, 7000, carEncoder.flags(10, false), 0);
 
-        graph.edge(5, 6, 7000, carEncoder.flags(10, false));
-        graph.edge(7, 5, 5000, carEncoder.flags(20, false));
+        graph.edge(5, 6, 7000, carEncoder.flags(10, false), 0);
+        graph.edge(7, 5, 5000, carEncoder.flags(20, false), 0);
 
-        graph.edge(6, 7, 5000, carEncoder.flags(20, true));
+        graph.edge(6, 7, 5000, carEncoder.flags(20, true), 0);
     }
 
     @Test public void testCalcFootPath() {
@@ -123,52 +123,52 @@ public abstract class AbstractRoutingAlgorithmTester {
     }
 
     void initFootVsCar(Graph graph) {
-        graph.edge(0, 1, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false));
-        graph.edge(0, 4, 5000, footEncoder.flags(5, true) | carEncoder.flags(20, false));
+        graph.edge(0, 1, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false), 0);
+        graph.edge(0, 4, 5000, footEncoder.flags(5, true) | carEncoder.flags(20, false), 0);
 
-        graph.edge(1, 4, 7000, carEncoder.flags(10, true));
-        graph.edge(1, 5, 7000, carEncoder.flags(10, true));
-        graph.edge(1, 2, 20000, footEncoder.flags(5, true) | carEncoder.flags(10, true));
+        graph.edge(1, 4, 7000, carEncoder.flags(10, true), 0);
+        graph.edge(1, 5, 7000, carEncoder.flags(10, true), 0);
+        graph.edge(1, 2, 20000, footEncoder.flags(5, true) | carEncoder.flags(10, true), 0);
 
-        graph.edge(5, 2, 5000, carEncoder.flags(10, false));
-        graph.edge(2, 3, 5000, footEncoder.flags(5, true) | carEncoder.flags(10, false));
+        graph.edge(5, 2, 5000, carEncoder.flags(10, false), 0);
+        graph.edge(2, 3, 5000, footEncoder.flags(5, true) | carEncoder.flags(10, false), 0);
 
-        graph.edge(5, 3, 11000, carEncoder.flags(20, false));
-        graph.edge(3, 7, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false));
+        graph.edge(5, 3, 11000, carEncoder.flags(20, false), 0);
+        graph.edge(3, 7, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false), 0);
 
-        graph.edge(4, 6, 5000, carEncoder.flags(20, false));
-        graph.edge(5, 4, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false));
+        graph.edge(4, 6, 5000, carEncoder.flags(20, false), 0);
+        graph.edge(5, 4, 7000, footEncoder.flags(5, true) | carEncoder.flags(10, false), 0);
 
-        graph.edge(5, 6, 7000, carEncoder.flags(10, false));
-        graph.edge(7, 5, 5000, footEncoder.flags(5, true) | carEncoder.flags(20, false));
+        graph.edge(5, 6, 7000, carEncoder.flags(10, false), 0);
+        graph.edge(7, 5, 5000, footEncoder.flags(5, true) | carEncoder.flags(20, false), 0);
 
-        graph.edge(6, 7, 5000, carEncoder.flags(20, true));
+        graph.edge(6, 7, 5000, carEncoder.flags(20, true), 0);
     }
 
     // see test-graph.svg !
     protected Graph createTestGraph() {
         Graph graph = createGraph();
 
-        graph.edge(0, 1, 7, true);
-        graph.edge(0, 4, 6, true);
+        graph.edge(0, 1, 7, true, 0);
+        graph.edge(0, 4, 6, true, 0);
 
-        graph.edge(1, 4, 1, true);
-        graph.edge(1, 5, 8, true);
-        graph.edge(1, 2, 2, true);
+        graph.edge(1, 4, 1, true, 0);
+        graph.edge(1, 5, 8, true, 0);
+        graph.edge(1, 2, 2, true, 0);
 
-        graph.edge(2, 5, 5, true);
-        graph.edge(2, 3, 2, true);
+        graph.edge(2, 5, 5, true, 0);
+        graph.edge(2, 3, 2, true, 0);
 
-        graph.edge(3, 5, 2, true);
-        graph.edge(3, 7, 10, true);
+        graph.edge(3, 5, 2, true, 0);
+        graph.edge(3, 7, 10, true, 0);
 
-        graph.edge(4, 6, 4, true);
-        graph.edge(4, 5, 7, true);
+        graph.edge(4, 6, 4, true, 0);
+        graph.edge(4, 5, 7, true, 0);
 
-        graph.edge(5, 6, 2, true);
-        graph.edge(5, 7, 1, true);
+        graph.edge(5, 6, 2, true, 0);
+        graph.edge(5, 7, 1, true, 0);
 
-        graph.edge(6, 7, 5, true);
+        graph.edge(6, 7, 5, true, 0);
         return graph;
     }
 
@@ -201,15 +201,15 @@ public abstract class AbstractRoutingAlgorithmTester {
     // see wikipedia-graph.svg !
     protected Graph createWikipediaTestGraph() {
         Graph graph = createGraph();
-        graph.edge(0, 1, 7, true);
-        graph.edge(0, 2, 9, true);
-        graph.edge(0, 5, 14, true);
-        graph.edge(1, 2, 10, true);
-        graph.edge(1, 3, 15, true);
-        graph.edge(2, 5, 2, true);
-        graph.edge(2, 3, 11, true);
-        graph.edge(3, 4, 6, true);
-        graph.edge(4, 5, 9, true);
+        graph.edge(0, 1, 7, true, 0);
+        graph.edge(0, 2, 9, true, 0);
+        graph.edge(0, 5, 14, true, 0);
+        graph.edge(1, 2, 10, true, 0);
+        graph.edge(1, 3, 15, true, 0);
+        graph.edge(2, 5, 2, true, 0);
+        graph.edge(2, 3, 11, true, 0);
+        graph.edge(3, 4, 6, true, 0);
+        graph.edge(4, 5, 9, true, 0);
         return graph;
     }
 
@@ -219,16 +219,16 @@ public abstract class AbstractRoutingAlgorithmTester {
     // \   /   /
     //  7-6-5-/
     public static void initBiGraph(Graph graph) {
-        graph.edge(0, 1, 100, true);
-        graph.edge(1, 2, 1, true);
-        graph.edge(2, 3, 1, true);
-        graph.edge(3, 4, 1, true);
-        graph.edge(4, 5, 25, true);
-        graph.edge(5, 6, 25, true);
-        graph.edge(6, 7, 5, true);
-        graph.edge(7, 0, 5, true);
-        graph.edge(3, 8, 20, true);
-        graph.edge(8, 6, 20, true);
+        graph.edge(0, 1, 100, true, 0);
+        graph.edge(1, 2, 1, true, 0);
+        graph.edge(2, 3, 1, true, 0);
+        graph.edge(3, 4, 1, true, 0);
+        graph.edge(4, 5, 25, true, 0);
+        graph.edge(5, 6, 25, true, 0);
+        graph.edge(6, 7, 5, true, 0);
+        graph.edge(7, 0, 5, true, 0);
+        graph.edge(3, 8, 20, true, 0);
+        graph.edge(8, 6, 20, true, 0);
     }
 
     @Test public void testBidirectional() {
@@ -254,16 +254,16 @@ public abstract class AbstractRoutingAlgorithmTester {
     @Test public void testBidirectional2() {
         Graph graph = createGraph();
 
-        graph.edge(0, 1, 100, true);
-        graph.edge(1, 2, 1, true);
-        graph.edge(2, 3, 1, true);
-        graph.edge(3, 4, 1, true);
-        graph.edge(4, 5, 20, true);
-        graph.edge(5, 6, 10, true);
-        graph.edge(6, 7, 5, true);
-        graph.edge(7, 0, 5, true);
-        graph.edge(3, 8, 20, true);
-        graph.edge(8, 6, 20, true);
+        graph.edge(0, 1, 100, true, 0);
+        graph.edge(1, 2, 1, true, 0);
+        graph.edge(2, 3, 1, true, 0);
+        graph.edge(3, 4, 1, true, 0);
+        graph.edge(4, 5, 20, true, 0);
+        graph.edge(5, 6, 10, true, 0);
+        graph.edge(6, 7, 5, true, 0);
+        graph.edge(7, 0, 5, true, 0);
+        graph.edge(3, 8, 20, true, 0);
+        graph.edge(8, 6, 20, true, 0);
 
         Path p = prepareGraph(graph).createAlgo().calcPath(0, 4);
         assertEquals(p.toString(), 40, p.distance(), 1e-4);
@@ -301,8 +301,8 @@ public abstract class AbstractRoutingAlgorithmTester {
     @Test
     public void testCannotCalculateSP() {
         Graph graph = createGraph();
-        graph.edge(0, 1, 1, false);
-        graph.edge(1, 2, 1, false);
+        graph.edge(0, 1, 1, false, 0);
+        graph.edge(1, 2, 1, false, 0);
 
         Path p = prepareGraph(graph).createAlgo().calcPath(0, 2);
         assertEquals(p.toString(), 3, p.calcNodes().size());
@@ -311,12 +311,12 @@ public abstract class AbstractRoutingAlgorithmTester {
     @Test
     public void testDirectedGraphBug1() {
         Graph graph = createGraph();
-        graph.edge(0, 1, 3, false);
-        graph.edge(1, 2, 2.99, false);
+        graph.edge(0, 1, 3, false, 0);
+        graph.edge(1, 2, 2.99, false, 0);
 
-        graph.edge(0, 3, 2, false);
-        graph.edge(3, 4, 3, false);
-        graph.edge(4, 2, 1, false);
+        graph.edge(0, 3, 2, false, 0);
+        graph.edge(3, 4, 3, false, 0);
+        graph.edge(4, 2, 1, false, 0);
 
         Path p = prepareGraph(graph).createAlgo().calcPath(0, 2);
         assertEquals(Helper.createTList(0, 1, 2), p.calcNodes());
@@ -327,11 +327,11 @@ public abstract class AbstractRoutingAlgorithmTester {
     @Test
     public void testDirectedGraphBug2() {
         Graph graph = createGraph();
-        graph.edge(0, 1, 1, false);
-        graph.edge(1, 2, 1, false);
-        graph.edge(2, 3, 1, false);
+        graph.edge(0, 1, 1, false, 0);
+        graph.edge(1, 2, 1, false, 0);
+        graph.edge(2, 3, 1, false, 0);
 
-        graph.edge(3, 1, 4, true);
+        graph.edge(3, 1, 4, true, 0);
 
         Path p = prepareGraph(graph).createAlgo().calcPath(0, 3);
         assertEquals(Helper.createTList(0, 1, 2, 3), p.calcNodes());
@@ -350,14 +350,14 @@ public abstract class AbstractRoutingAlgorithmTester {
         graph.setNode(3, 1.5, 2.5);
         graph.setNode(4, 0.5, 4.5);
 
-        graph.edge(0, 1, 2, true).wayGeometry(Helper.createPointList(0, 3));
-        graph.edge(2, 3, 2, true);
-        graph.edge(3, 4, 2, true).wayGeometry(Helper.createPointList(1, 3.5));
+        graph.edge(0, 1, 2, true, 0).wayGeometry(Helper.createPointList(0, 3));
+        graph.edge(2, 3, 2, true, 0);
+        graph.edge(3, 4, 2, true, 0).wayGeometry(Helper.createPointList(1, 3.5));
 
-        graph.edge(0, 2, 0.8, true).wayGeometry(Helper.createPointList(0, 1.6, 0, 0, 1, 0));
-        graph.edge(0, 2, 1.2, true);
-        graph.edge(1, 3, 1.3, true);
-        graph.edge(1, 4, 1, true);
+        graph.edge(0, 2, 0.8, true, 0).wayGeometry(Helper.createPointList(0, 1.6, 0, 0, 1, 0));
+        graph.edge(0, 2, 1.2, true, 0);
+        graph.edge(1, 3, 1.3, true, 0);
+        graph.edge(1, 4, 1, true, 0);
 
         AlgorithmPreparation prepare = prepareGraph(graph);
         Path p = prepare.createAlgo().calcPath(4, 0);
@@ -437,7 +437,7 @@ public abstract class AbstractRoutingAlgorithmTester {
                     float dist = 5 + Math.abs(rand.nextInt(5));
                     if (print)
                         System.out.print(" " + (int) dist + "\t           ");
-                    tmp.edge(matrix[w][h], matrix[w][h - 1], dist, true);
+                    tmp.edge(matrix[w][h], matrix[w][h - 1], dist, true, 0);
                 }
             }
             if (print) {
@@ -455,7 +455,7 @@ public abstract class AbstractRoutingAlgorithmTester {
                     float dist = 5 + Math.abs(rand.nextInt(5));
                     if (print)
                         System.out.print("-- " + (int) dist + "\t-- ");
-                    tmp.edge(matrix[w][h], matrix[w - 1][h], dist, true);
+                    tmp.edge(matrix[w][h], matrix[w - 1][h], dist, true, 0);
                 }
                 if (print)
                     System.out.print("(" + matrix[w][h] + ")\t");
