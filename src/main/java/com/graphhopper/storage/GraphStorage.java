@@ -69,6 +69,8 @@ public class GraphStorage implements Graph, Storable {
     /**
      * Used to save the street names
      */
+    protected int nameEntrySize;
+    private int nameCount = 0;
     protected DataAccess names;
     /**
      * interval [0,n)
@@ -77,7 +79,7 @@ public class GraphStorage implements Graph, Storable {
     private BBox bounds;
     // remove markers are not yet persistent!
     private MyBitSet removedNodes;
-    private int edgeEntryIndex = -1, nodeEntryIndex = -1;
+    private int edgeEntryIndex = -1, nodeEntryIndex = -1, nameEntryIndex = -1;
     // length | nodeA | nextNode | ... | nodeB
     // as we use integer index in 'egdes' area => 'geometry' area is limited to 2GB
     private DataAccess geometry;
@@ -132,9 +134,15 @@ public class GraphStorage implements Graph, Storable {
         return nodeEntryIndex;
     }
 
+    protected final int nextNameEntryIndex() {
+        nameEntryIndex++;
+        return nameEntryIndex;
+    }
+
     protected final void initNodeAndEdgeEntrySize() {
         nodeEntrySize = nodeEntryIndex + 1;
         edgeEntrySize = edgeEntryIndex + 1;
+        nameEntrySize = nameEntryIndex + 1;
     }
 
     /**
@@ -149,6 +157,7 @@ public class GraphStorage implements Graph, Storable {
         nodes.segmentSize(bytes);
         edges.segmentSize(bytes);
         geometry.segmentSize(bytes);
+        names.segmentSize(bytes);
         return this;
     }
 
@@ -163,6 +172,7 @@ public class GraphStorage implements Graph, Storable {
 
         edges.createNew((long) initBytes * edgeEntrySize);
         geometry.createNew((long) initBytes);
+        names.createNew((long) initBytes);
         initialized = true;
         return this;
     }
@@ -954,6 +964,7 @@ public class GraphStorage implements Graph, Storable {
         geometry.flush();
         edges.flush();
         nodes.flush();
+        names.flush();
     }
 
     @Override
@@ -971,10 +982,106 @@ public class GraphStorage implements Graph, Storable {
         return nodes.version();
     }
 
+    /*
+     * We add street names in UTF-32 format.
+     * We are going to waste spase on the SD card, but this
+     * will prevent problems with the DataAccess interface.
+     */
+    public int addName(String name) {
+        int i;
+        int offset;
+        byte[] nameAsBytes;
+        try {
+            nameAsBytes = name.getBytes("UTF-32");
+        }
+        catch (java.io.UnsupportedEncodingException e)
+        {
+            /* we should never arrive here */
+            e.printStackTrace();
+            return 0;
+        }
+
+        for (i = 0, offset = 0 ; i < nameCount ; i++) {
+            int size;
+            int j;
+            byte b[];
+            boolean match;
+
+            size = names.getInt(offset);
+            b = new byte[4*size];
+
+            for (j = 0, match = true ; j < size ; j++) {
+                int value = names.getInt(offset + 1 + j);
+
+                b[j*4] = (byte) ((value >> 24) & 0xFF);
+                b[j*4+1] = (byte) ((value >> 16) & 0xFF);
+                b[j*4+2] = (byte) ((value >> 8) & 0xFF);
+                b[j*4+3] = (byte) (value & 0xFF);
+
+                if (j * 4 + 3 > nameAsBytes.length ||
+                    b[j*4] != nameAsBytes[j*4] ||
+                    b[j*4+1] != nameAsBytes[j*4+1] ||
+                    b[j*4+2] != nameAsBytes[j*4+2] ||
+                    b[j*4+3] != nameAsBytes[j*4+3]) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match && j == size && b.length == nameAsBytes.length)
+            {
+                /* the name of the street is already in the DataAccess */
+                return offset;
+            }
+
+            /* loop to the next name*/
+            offset+=size+1;
+        }
+
+        /* if we arrive here, we need to add the name to the DataAccess */
+        names.ensureCapacity (4*(offset+1+nameAsBytes.length/4));
+        names.setInt(offset,nameAsBytes.length/4);
+
+        for (i = 0 ; i < name.length() ; i++) {
+            int value = (nameAsBytes[i*4] << 24) +
+                        (nameAsBytes[i*4+1] << 16) +
+                        (nameAsBytes[i*4+2] << 8) +
+                        nameAsBytes[i*4+3];
+
+            names.setInt(offset+1+i, value);
+        }
+
+        nameCount++;
+        return offset;
+    }
+
+    public String getName(int index) {
+        int size = names.getInt(index);
+        byte[] b = new byte[4*size];
+
+        for (int i = 0 ; i < size ; i++) {
+            int value = names.getInt(index+1+i);
+
+            b[i*4] = (byte) ((value >> 24) & 0xFF);
+            b[i*4+1] = (byte) ((value >> 16) & 0xFF);
+            b[i*4+2] = (byte) ((value >> 8) & 0xFF);
+            b[i*4+3] = (byte) (value & 0xFF);
+        }
+
+        try {
+            return new String (b, "UTF-32");
+        }
+        catch (java.io.UnsupportedEncodingException e) {
+            /* we should neve r arrive here */
+            return "";
+        }
+    }
+
     @Override public String toString() {
         return "edges:" + nf(edgeCount) + "(" + edges.capacity() / Helper.MB + "), "
                 + "nodes:" + nf(nodeCount) + "(" + nodes.capacity() / Helper.MB + "), "
                 + "geo:" + nf(maxGeoRef) + "(" + geometry.capacity() / Helper.MB + "), "
+                + "names:" + nf(nameCount) + "(" + names.capacity() / Helper.MB + "), "
                 + "bounds:" + bounds;
     }
 }

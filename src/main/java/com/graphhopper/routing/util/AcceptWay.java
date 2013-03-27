@@ -32,6 +32,7 @@ public class AcceptWay {
     private boolean car;
     private boolean bike;
     private boolean foot;
+    private String name;
     private VehicleEncoder firstEncoder = carEncoder;
 
     public AcceptWay(boolean car, boolean bike, boolean foot) {
@@ -60,6 +61,10 @@ public class AcceptWay {
 
     public boolean acceptsFoot() {
         return foot;
+    }
+
+    public String name() {
+        return name;
     }
 
     /**
@@ -137,6 +142,12 @@ public class AcceptWay {
                 outProperties.put("bikepaid", true);
             }
         }
+
+        value = osmProperties.get("name");
+        if (value != null)
+            name = (String) value;
+        else
+            name = "";
 
         boolean oneWayForBike = !"no".equals(osmProperties.get("oneway:bicycle"));
         String cycleway = (String) osmProperties.get("cycleway");

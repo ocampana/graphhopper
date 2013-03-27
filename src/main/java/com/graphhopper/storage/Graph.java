@@ -122,4 +122,8 @@ public interface Graph {
      * Performs optimization routines like deletion or node rearrangements.
      */
     void optimize();
+
+    public int addName(String name);
+
+    public String getName (int index);
 }

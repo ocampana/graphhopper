@@ -19,6 +19,7 @@
 package com.graphhopper;
 
 import com.graphhopper.util.PointList;
+import com.graphhopper.util.WayList;
 
 /**
  * Wrapper to simplify output of GraphHopper.
@@ -27,13 +28,15 @@ import com.graphhopper.util.PointList;
  */
 public class GHResponse {
 
-    private final PointList list;
+    private final PointList pointList;
+    private final WayList wayList;
     private double distance;
     private long time;
     private String debugInfo = "";
 
-    public GHResponse(PointList list) {
-        this.list = list;
+    public GHResponse(PointList pointList, WayList wayList) {
+        this.pointList = pointList;
+        this.wayList = wayList;
     }
 
     public GHResponse distance(double distance) {
@@ -58,11 +61,15 @@ public class GHResponse {
     }
 
     public boolean found() {
-        return !list.isEmpty();
+        return !pointList.isEmpty();
     }
 
     public PointList points() {
-        return list;
+        return pointList;
+    }
+
+    public WayList ways() {
+        return wayList;
     }
 
     public String debugInfo() {
@@ -76,6 +83,6 @@ public class GHResponse {
 
     @Override
     public String toString() {
-        return "found:" + found() + ", nodes:" + list.size() + ": " + list.toString();
+        return "found:" + found() + ", nodes:" + pointList.size() + ": " + pointList.toString();
     }
 }

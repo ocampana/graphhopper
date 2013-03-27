@@ -42,6 +42,7 @@ import com.graphhopper.util.CmdArgs;
 import com.graphhopper.util.DouglasPeucker;
 import com.graphhopper.util.Helper;
 import com.graphhopper.util.PointList;
+import com.graphhopper.util.WayList;
 import com.graphhopper.util.StopWatch;
 import java.io.File;
 import java.io.IOException;
@@ -257,6 +258,7 @@ public class GraphHopper implements GraphHopperAPI {
         debug += ", " + algo.name() + "-routing:" + sw.stop().getSeconds() + "s"
                 + ", " + path.debugInfo();
         PointList points = path.calcPoints();
+        WayList ways = path.calcWays();
         if (simplify) {
             sw = new StopWatch().start();
             int orig = points.size();
@@ -264,7 +266,7 @@ public class GraphHopper implements GraphHopperAPI {
             new DouglasPeucker().maxDistance(minPathPrecision).simplify(points);
             debug += ", simplify (" + orig + "->" + points.size() + "):" + sw.stop().getSeconds() + "s";
         }
-        return new GHResponse(points).distance(path.distance()).time(path.time()).debugInfo(debug);
+        return new GHResponse(points, ways).distance(path.distance()).time(path.time()).debugInfo(debug);
     }
 
     private void initIndex(Directory dir) {

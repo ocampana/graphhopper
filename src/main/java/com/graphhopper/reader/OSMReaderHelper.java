@@ -138,7 +138,9 @@ public abstract class OSMReaderHelper {
         boolean valid = parseWay(sReader);
         if (valid) {
             int flags = acceptWay.toFlags(outProperties);
-            int successfullAdded = addEdge(wayNodes, flags, 0);
+            String name = acceptWay.name();
+            int nameIndex = g.addName(name);
+            int successfullAdded = addEdge(wayNodes, flags, nameIndex);
             edgeCount += successfullAdded;
         }
     }

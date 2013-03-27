@@ -23,6 +23,7 @@ import com.graphhopper.storage.EdgeEntry;
 import com.graphhopper.storage.Graph;
 import com.graphhopper.util.EdgeIterator;
 import com.graphhopper.util.PointList;
+import com.graphhopper.util.WayList;
 import com.graphhopper.util.StopWatch;
 import gnu.trove.list.TDoubleList;
 import gnu.trove.list.TIntList;
@@ -30,6 +31,8 @@ import gnu.trove.list.array.TDoubleArrayList;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
+
+import java.lang.Math.*;
 
 /**
  * Stores the nodes for the found path of an algorithm. It additionally needs
@@ -52,6 +55,7 @@ public class Path {
     private int fromNode = EdgeIterator.NO_EDGE;
     private TIntList edgeIds;
     private PointList cachedPoints;
+    private WayList cachedWays;
     private double weight;
 
     public Path(Graph graph, VehicleEncoder encoder) {
@@ -247,6 +251,95 @@ public class Path {
             }
         });
         return cachedPoints;
+    }
+
+    /**
+     * @return the cached list of ways for this path
+     */
+    public WayList calcWays() {
+        if (cachedWays != null)
+            return cachedWays;
+        cachedWays = new WayList(edgeIds.size() / 4);
+        if (edgeIds.isEmpty())
+            return cachedWays;
+
+        final int tmpNode = fromNode();
+        forEveryEdge(new EdgeVisitor() {
+            int name = -1;
+            /*
+             * We need three points to make directions
+             *
+             *         (1)------(2)
+             *         /
+             *        /
+             *       /
+             *    (0)
+             *
+             * 0 is the node visited at t-2, 1 is the node visited
+             * at t-1 and 2 is the node being visited at instant t.
+             * orientation is the angle of the vector(1->2) expressed
+             * as atan2, while previousOrientation is the angle of the
+             * vector(0->1)
+             * Intuitively, if orientation is minor than
+             * previousOrientation, then we have to turn right, while
+             * if is greater we have to turn left. To make this
+             * algorithm work, we need to make the comparison by
+             * considering orientation belonging to the interval
+             * [ - pi + previousOrientation , + pi + previousOrientation ]
+             */
+            double previousLatitude = graph.getLatitude(tmpNode);
+            double previousLongitude = graph.getLongitude(tmpNode);
+            double previousOrientation;
+
+            @Override public void next(EdgeIterator iter) {
+                double orientation = 0;
+                int baseNode = iter.baseNode();
+                double latitude = graph.getLatitude(baseNode);
+                double longitude = graph.getLongitude(baseNode);
+
+                if (name == -1)
+                {
+                    name = iter.name();
+                    cachedWays.add(WayList.CONTINUE_ON_STREET, graph.getName(name));
+                }
+                else if (name != iter.name())
+                {
+                    orientation = Math.atan2(latitude - previousLatitude, longitude - previousLongitude);
+                    if(orientation < 0)
+                        orientation+=Math.PI*2;
+
+                    if (name != iter.name())
+                    {
+                        double tmpOrientation = 0;
+
+                        if (previousOrientation >= 0 &&
+                            orientation < - Math.PI + previousOrientation)
+                            tmpOrientation = orientation + 2 * Math.PI;
+                        else if (previousOrientation >= 0)
+                            tmpOrientation = orientation;
+                        else if (previousOrientation < 0 &&
+                            orientation > + Math.PI + previousOrientation)
+                            tmpOrientation = orientation - 2 * Math.PI;
+                        else if (previousOrientation < 0)
+                            tmpOrientation = orientation;
+
+                        if (tmpOrientation > previousOrientation)
+                            cachedWays.add (WayList.TURN_LEFT, graph.getName(name));
+                        if (tmpOrientation < previousOrientation)
+                            cachedWays.add (WayList.TURN_RIGHT, graph.getName(name));
+                        else
+                            cachedWays.add (WayList.CONTINUE_ON_STREET, graph.getName(name));
+                    }
+                    name = iter.name();
+                }
+
+                previousLatitude = latitude;
+                previousLongitude = longitude;
+                previousOrientation = orientation;
+            }
+        });
+
+        return cachedWays;
     }
 
     public TDoubleList calcDistances() {
