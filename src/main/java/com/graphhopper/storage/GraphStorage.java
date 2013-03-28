@@ -916,6 +916,8 @@ public class GraphStorage implements Graph, Storable {
                 throw new IllegalStateException("cannot load nodes. corrupt file or directory? " + dir);
             if (!geometry.loadExisting())
                 throw new IllegalStateException("cannot load geometry. corrupt file or directory? " + dir);
+            if (!names.loadExisting())
+                throw new IllegalStateException("cannot load names. corrupt file or directory? " + dir);
             if (nodes.version() != edges.version())
                 throw new IllegalStateException("nodes and edges files have different versions!? " + dir);
             // nodes
@@ -937,6 +939,10 @@ public class GraphStorage implements Graph, Storable {
 
             // geometry
             maxGeoRef = edges.getHeader(0);
+
+            // names
+            nameCount = names.getHeader(0);
+
             initialized = true;
             return true;
         }
@@ -960,6 +966,9 @@ public class GraphStorage implements Graph, Storable {
 
         // geometry
         geometry.setHeader(0, maxGeoRef);
+
+        // names
+        names.setHeader(0, nameCount);
 
         geometry.flush();
         edges.flush();
@@ -1043,10 +1052,10 @@ public class GraphStorage implements Graph, Storable {
         names.setInt(offset,nameAsBytes.length/4);
 
         for (i = 0 ; i < name.length() ; i++) {
-            int value = (nameAsBytes[i*4] << 24) +
-                        (nameAsBytes[i*4+1] << 16) +
-                        (nameAsBytes[i*4+2] << 8) +
-                        nameAsBytes[i*4+3];
+            int value = ((((int) nameAsBytes[i*4]) << 24) & 0xFF000000) |
+                        ((((int) nameAsBytes[i*4+1]) << 16) & 0x00FF0000) |
+                        ((((int) nameAsBytes[i*4+2]) << 8) & 0x0000FF00) |
+                        ((((int) nameAsBytes[i*4+3])) & 0x000000FF);
 
             names.setInt(offset+1+i, value);
         }
