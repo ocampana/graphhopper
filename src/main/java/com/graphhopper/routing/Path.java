@@ -302,35 +302,41 @@ public class Path {
                     name = iter.name();
                     cachedWays.add(WayList.CONTINUE_ON_STREET, graph.getName(name));
                 }
-                else if (name != iter.name())
+                else
                 {
+                    double tmpOrientation = 0;
                     orientation = Math.atan2(latitude - previousLatitude, longitude - previousLongitude);
-                    if(orientation < 0)
-                        orientation+=Math.PI*2;
+
+                    if (previousOrientation > 0 &&
+                        orientation < - Math.PI + previousOrientation)
+                        tmpOrientation = orientation + 2 * Math.PI;
+                    else if (previousOrientation > 0)
+                        tmpOrientation = orientation;
+                    else if (previousOrientation < 0 &&
+                        orientation > + Math.PI + previousOrientation)
+                        tmpOrientation = orientation - 2 * Math.PI;
+                    else if (previousOrientation < 0)
+                        tmpOrientation = orientation;
 
                     if (name != iter.name())
                     {
-                        double tmpOrientation = 0;
+                        name = iter.name();
 
-                        if (previousOrientation >= 0 &&
-                            orientation < - Math.PI + previousOrientation)
-                            tmpOrientation = orientation + 2 * Math.PI;
-                        else if (previousOrientation >= 0)
-                            tmpOrientation = orientation;
-                        else if (previousOrientation < 0 &&
-                            orientation > + Math.PI + previousOrientation)
-                            tmpOrientation = orientation - 2 * Math.PI;
-                        else if (previousOrientation < 0)
-                            tmpOrientation = orientation;
-
-                        if (tmpOrientation > previousOrientation)
-                            cachedWays.add (WayList.TURN_LEFT, graph.getName(name));
-                        if (tmpOrientation < previousOrientation)
-                            cachedWays.add (WayList.TURN_RIGHT, graph.getName(name));
-                        else
+                        /*
+                         * we have a tolerance of approx +/- 10 degrees
+                         * to indicate that we have to go straight and
+                         * not to turn.
+                         */
+                        if (Math.abs(tmpOrientation - previousOrientation) < 0.2)
                             cachedWays.add (WayList.CONTINUE_ON_STREET, graph.getName(name));
+                        else
+                        {
+                            if (tmpOrientation > previousOrientation)
+                                cachedWays.add (WayList.TURN_LEFT, graph.getName(name));
+                            else
+                                cachedWays.add (WayList.TURN_RIGHT, graph.getName(name));
+                        }
                     }
-                    name = iter.name();
                 }
 
                 previousLatitude = latitude;

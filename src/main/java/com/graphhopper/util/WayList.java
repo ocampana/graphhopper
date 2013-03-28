@@ -31,7 +31,7 @@ public class WayList {
 
     public static final int CONTINUE_ON_STREET = 0;
     public static final int TURN_LEFT = 1;
-    public static final int TURN_RIGHT = 1;
+    public static final int TURN_RIGHT = 2;
 
     private int[] indications;
     private String[] names;
